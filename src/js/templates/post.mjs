@@ -29,7 +29,7 @@ export function postTemplate(postData) {
 	/* link to post */
 
 	const anchor = document.createElement('a');
-	anchor.href = '../posts/' + `?id=${postData.id}`;
+	anchor.href = '../Listing/' + `?id=${postData.id}`;
 	anchor.style = 'text-decoration: none';
 	anchor.appendChild(postTitle);
 
@@ -80,62 +80,36 @@ export function postTemplate(postData) {
 		'bg-dark',
 		'text-light'
 	);
-	postBody.innerText = postData.body;
+	postBody.innerText = postData.description;
 	container.appendChild(postBody);
 
-	/* Buttons Container */
+	/* Details Container */
 
-	const postButtonsContainer = document.createElement('div');
-	postButtonsContainer.classList.add(
+	const postDetailsContainer = document.createElement('div');
+	postDetailsContainer.classList.add(
 		'd-flex',
-		'justify-content-between',
+		'details-container',
 		'accent',
 		'p-md-3',
 		'rounded-bottom',
 		'align-items-center'
 	);
+	
+	/* Buttons */
 
-	/* Flair Buttons */
+	const postButtonGroup = document.createElement('div');
+	postButtonGroup.classList.add('btn-group', 'p-1');
 
-	const postButtonsGroup = document.createElement('div');
-	postButtonsGroup.classList.add('btn-group', 'p-1');
 
-	const likeButton = document.createElement('button');
-	likeButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
-	likeButton.innerText = 'Like';
-	postButtonsGroup.appendChild(likeButton);
-
-	const editButton = document.createElement('button');
-	editButton.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'editButton');
-	editButton.addEventListener('click', () => {
-		window.location.href = `/posts/edit/?id=${postData.id}`;
-	});
-	editButton.innerText = 'Edit';
-	postButtonsGroup.appendChild(editButton);
-
-	const commentButton = document.createElement('button');
-	commentButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
-	commentButton.innerText = 'Comment';
-	postButtonsGroup.appendChild(commentButton);
-	postButtonsContainer.appendChild(postButtonsGroup);
+	const bidButton = document.createElement('button');
+	bidButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
+	bidButton.innerText = 'Place Bid';
+	postButtonGroup.appendChild(bidButton);
+	postDetailsContainer.appendChild(postButtonGroup);
 
 	/* Post Stats */
 
-	const postStats = document.createElement('small');
-	postStats.classList.add('text-primary');
-
-	const postLikes = document.createElement('span');
-	postLikes.classList.add('me-2');
-	postLikes.innerText = '10 likes';
-	postStats.appendChild(postLikes);
-
-	const postComments = document.createElement('span');
-	postComments.classList.add('me-2');
-	postComments.innerText = '5 comments';
-
-	postStats.appendChild(postComments);
-	postButtonsContainer.appendChild(postStats);
-	container.appendChild(postButtonsContainer);
+	container.appendChild(postDetailsContainer);
 
 	return postWrapper;
 }

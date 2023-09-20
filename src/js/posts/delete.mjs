@@ -1,4 +1,4 @@
-import { API_SOCIAL_URL } from '../api/constants.mjs';
+import { API_AUCTION_URL } from '../api/constants.mjs';
 import { authFetch } from './authFetch.mjs';
 
 /**
@@ -12,7 +12,7 @@ const actions = '/posts';
 const method = 'delete';
 
 export async function removePost(id) {
-	const createPostURL = `${API_SOCIAL_URL}${actions}/${id}`;
+	const createPostURL = `${API_AUCTION_URL}${actions}/${id}`;
 	const response = await authFetch(createPostURL, {
 		method,
 	});

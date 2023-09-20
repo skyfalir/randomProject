@@ -1,4 +1,4 @@
-import { API_SOCIAL_URL } from '../constants.mjs';
+import { API_AUCTION_URL } from '../constants.mjs';
 
 /**
  * registers a user profile by sending a POST request to an API URL with the given profile data in JSON format.
@@ -11,7 +11,7 @@ const action = '/auth/register';
 const method = 'post';
 
 export async function register(profile) {
-	const registerURL = API_SOCIAL_URL + action;
+	const registerURL = API_AUCTION_URL + action;
 	const body = JSON.stringify(profile);
 
 	const response = await fetch(registerURL, {

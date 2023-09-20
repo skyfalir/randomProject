@@ -21,6 +21,8 @@ if (path === '/login/') {
 	/**
 	 * shows posts based on the ID provided in the URL -
 	 * or all posts if no ID is provided.
+	 * 
+	 * id : 144f0728-c997-4fa7-b7aa-08712999b1c4
 	 */
 	async function showPosts() {
 		const urlParams = new URLSearchParams(window.location.search);
@@ -49,3 +51,4 @@ if (path === '/login/') {
 } else if (path === '/posts/edit/') {
 	listeners.setEditPostFormListener();
 }
+

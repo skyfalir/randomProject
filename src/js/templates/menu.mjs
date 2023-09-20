@@ -1,4 +1,4 @@
-import { getName, isLoggedIn } from "../api/helpers/storage.mjs";
+import { getCredit, getName, isLoggedIn } from "../api/helpers/storage.mjs";
 import { logout } from "../handlers/logout.mjs";
 
 /**
@@ -9,12 +9,13 @@ export function isLoggedInNav(){
 
     if (isLoggedIn()) {
         const name = getName();
+        const credits = getCredit();
 
 
         navMenu.innerHTML += 
         `<li class="nav-item mx-2 text-center">
             <a class="nav-link text-secondary" href="/profile/">${name}</a>
-                <img src="../assets/img/user.png" class="account-icon" alt="Profile Icon">
+               <p>Credits: ${credits}</p> 
         </li>
         <li class="nav-item">
             <button class="btn btn-secondary" id="logoutBtn" >Logout</button>

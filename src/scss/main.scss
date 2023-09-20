@@ -11,6 +11,9 @@
 nav img {
     width: 50px
 }
+.navbar-nav p{
+    color: #ffd644;
+}
 
 .login-page{
     background-color: $primary;
@@ -47,17 +50,8 @@ nav img {
 .bg-dark-subtle{
     background: #1d2124;
 }
-.carousel-item img{
-    opacity: 70%;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.carousel-item img:hover{
-    opacity: 100%;
-}
-.emotes{
-    min-width: 70px;
-    max-width: 70px;
+.details-container{
+    justify-content: right;
 }
 #searchError{
     display: none;
