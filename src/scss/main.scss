@@ -1,0 +1,64 @@
+@import url('https://fonts.cdnfonts.com/css/montserrat');
+@import "variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+
+
+* {
+    font-family: 'Montserrat medium';
+}
+
+nav img {
+    width: 50px
+}
+
+.login-page{
+    background-color: $primary;
+    opacity: 1;
+    background-size: 29.8px 10px;
+    background-image:  repeating-linear-gradient(to left, $primary, #3e818d 2px, $primary 2px, $primary);
+}
+
+.login{
+    background: #101213;
+    color: #999;
+    max-width: 400px;
+}
+
+.form-control{
+    border: var(--bs-border-width) solid $cyan; 
+}
+.account-icon{
+    width: 25px;
+
+}
+.post{
+    background-color: var(--c-primary);
+    max-width: 900px;
+}
+.accent{
+    background: rgb(0,213,255);
+    background: linear-gradient(45deg, $cyan 0%, rgb(77, 234, 255) 20%);
+    background-size: 500%;
+}
+.w-limit{
+    max-width: 1280px;
+}
+.bg-dark-subtle{
+    background: #1d2124;
+}
+.carousel-item img{
+    opacity: 70%;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.carousel-item img:hover{
+    opacity: 100%;
+}
+.emotes{
+    min-width: 70px;
+    max-width: 70px;
+}
+#searchError{
+    display: none;
+}
