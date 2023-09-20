@@ -13,7 +13,7 @@ if (path === '/login/') {
 	listeners.setloginFormListener();
 } else if (path === '/register/') {
 	listeners.setRegisterFormListener();
-} else if (path === '/listings/' || path === '/posts/' || path === '/profile/') {
+} else if (path === '/listings/' || path === '/listing/' || path === '/profile/') {
 	listeners.setPostFormListener();
 	isLoggedInNav();
 	redirectIfLoggedIn();
@@ -33,6 +33,7 @@ if (path === '/login/') {
 			try {
 				const post = await postmethod.get(id);
 				templates.renderPostTemplate(post, postsContainer);
+				
 			} catch (error) {
 				console.error(error);
 			}
@@ -45,7 +46,6 @@ if (path === '/login/') {
 			}
 		}
 	}
-
 	showPosts();
 	search();
 } else if (path === '/posts/edit/') {

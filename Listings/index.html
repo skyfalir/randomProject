@@ -51,17 +51,13 @@
 		</nav>
 		<div class="container-fluid w-limit my-3 bg-dark-subtle rounded-2">
 			<div class="row">
-				
-				<hr class="border-secondary p-3" />
-			</div>
-			<div class="row">
 				<div class="col-lg-12">
 					<div class="row d-flex justify-content-center">
-						<div class="create-post w-75 bg-dark rounded p-5 text-secondary">
+						<div class="create-post mt-5 w-75 bg-dark rounded p-5 text-secondary">
 							<h3 class="text-secondary text-center pb-1 mb-5">
-								Create Post
+								Create listing
 							</h3>
-							<form id="createPostForm">
+							<form id="createPostForm" enctype="multipart/form-data">
 								<div class="mb-3">
 									<label for="postTitle" class="form-label"
 										>Post Title</label
@@ -72,30 +68,57 @@
 										class="form-control"
 										id="postTitle"
 										placeholder="Enter post title"
+										value="its over 9000"
 										required
 										maxlength="50"
+									/>
+								</div>
+								<div class="mb-3">
+									<label for="Deadline" class="form-label"
+										>Deadline Date</label
+									>
+									<input
+										type="datetime-local"
+										name="endsAt"
+										class="form-control"
+										id="deadlineDate"
+										required
+									/>
+								</div>
+								<div class="mb-3">
+									<label for="media" class="form-label"
+										>Images</label
+									>
+									<input
+										type="text"
+										name="media"
+										class="form-control"
+										id="images"
+										value="https://picsum.photos/200,https://picsum.photos/230"
+										multiple
 									/>
 								</div>
 								<div class="mb-1">
 									<label for="postContent" class="form-label"
 										>Post Content</label
 									>
-									<textarea
+									<input
 										class="form-control"
-										name="body"
+										name="description"
 										id="postContent"
 										rows="3"
+										value="hello world"
 										placeholder="Enter post content"
-									></textarea>
+									>
 								</div>
 								<div
 									class="my-1 d-flex justify-content-center align-items-center"
 								>
 									<button
 										type="submit"
-										class="btn px-2 btn-outline-secondary"
+										class="btn px-2 mt-4 btn-outline-secondary"
 									>
-										Submit
+										List Item
 									</button>
 								</div>
 							</form>

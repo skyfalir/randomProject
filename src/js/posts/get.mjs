@@ -18,9 +18,12 @@ export async function get(id) {
 	const getPostURL = `${API_AUCTION_URL}${actions}/${id}`;
 
 	const response = await authFetch(getPostURL);
-	console.log(getPostURL)
 	
-	return await response.json();
+	
+	const data = await response.json();
+
+	console.log(data)
+	return data
 	
 }
 

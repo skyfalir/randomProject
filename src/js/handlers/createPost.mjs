@@ -5,26 +5,37 @@ import { create } from '../posts/index.mjs';
  * and creates a new post using the form data when submitted.
  */
 export function setPostFormListener() {
-	const form = document.querySelector('#createPostForm');
+    const form = document.querySelector('#createPostForm');
 
-	if (form) {
-		form.addEventListener('submit', async (event) => {
-			event.preventDefault();
-			const form = event.target;
-			const formData = new FormData(form);
-			const post = Object.fromEntries(formData.entries());
-			try {
-				await create(post);
-				
-				alert(`Post '${post.title}' created!`);
-				
-				window.location.reload();
-				
-			} catch (error) {
-				console.error(error);
+    if (form) {
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
 
-				alert("Error creating post");
-			}
-		});
-	}
+            // Handle the media field to convert it into an array of URLs
+            const mediaValue = formData.get('media');
+            const mediaArray = mediaValue.split(',').map(url => url.trim());
+
+            // Update the formData with the array
+            formData.set('media', mediaArray);
+
+            const post = Object.fromEntries(formData.entries());
+            try {
+                await create(post);
+                console.log(post);
+                alert(`Post '${post.title}' created!`);
+
+                //window.location.reload();
+
+            } catch (error) {
+                console.error(error);
+
+                alert("Error creating post");
+            }
+        });
+    }
 }
+
+
+  

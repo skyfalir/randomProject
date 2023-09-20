@@ -29,7 +29,7 @@ export function postTemplate(postData) {
 	/* link to post */
 
 	const anchor = document.createElement('a');
-	anchor.href = '../Listing/' + `?id=${postData.id}`;
+	anchor.href = '../listing/' + `?id=${postData.id}`;
 	anchor.style = 'text-decoration: none';
 	anchor.appendChild(postTitle);
 
