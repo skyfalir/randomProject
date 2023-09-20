@@ -13,7 +13,9 @@ if (path === '/login/') {
 	listeners.setloginFormListener();
 } else if (path === '/register/') {
 	listeners.setRegisterFormListener();
-} else if (path === '/listings/' || path === '/listing/' || path === '/profile/') {
+}else if(path === '/profile/'){
+	listeners.setEditPostFormListener();
+} else if (path === '/listings/' || path === '/listing/') {
 	listeners.setPostFormListener();
 	isLoggedInNav();
 	redirectIfLoggedIn();

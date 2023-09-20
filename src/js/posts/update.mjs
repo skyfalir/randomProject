@@ -1,4 +1,5 @@
 import { API_AUCTION_URL } from '../api/constants.mjs';
+import { getName } from '../api/helpers/storage.mjs';
 import { authFetch } from './authFetch.mjs';
 
 /**
@@ -8,7 +9,8 @@ import { authFetch } from './authFetch.mjs';
  * @return {Promise<Object>} - A Promise that resolves with the updated post data.
  */
 
-const actions = '/posts';
+
+const actions = `/profile${getName()}/media`;
 const method = 'put';
 
 export async function update(postData) {

@@ -51,7 +51,13 @@ nav img {
     background: #1d2124;
 }
 .details-container{
-    justify-content: right;
+    justify-content: space-between
+}
+.avatarimg{
+    display: inline-block;
+    width: 50px;
+    margin-left: 10px;
+    border-radius: 50%
 }
 #searchError{
     display: none;

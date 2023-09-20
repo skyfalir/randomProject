@@ -14,7 +14,7 @@ export function postTemplate(postData) {
 
 	/* Title */
 
-	const postTitle = document.createElement('h5');
+	const postTitle = document.createElement('h3');
 	postTitle.classList.add(
 		'post-title',
 		'card-title',
@@ -36,6 +36,16 @@ export function postTemplate(postData) {
 	container.appendChild(anchor);
 
 	/* Image */
+	/**
+	 * Checks if a given URL is a valid image URL.
+	 *
+	 * @param {string} url - The URL to check.
+	 * @return {boolean} Returns true if the URL is a valid image URL, else false.
+	 */
+	function isValidImageUrl(url) {
+		const imageRegex = /\.(jpeg|jpg|gif|png|svg)$/i;
+		return imageRegex.test(url);
+	}
 
 	const postImage = document.createElement('img');
 	postImage.classList.add('img-fluid', 'rounded-0', 'card-img');
@@ -57,30 +67,26 @@ export function postTemplate(postData) {
 
 	container.appendChild(postImage);
 
-	/**
-	 * Checks if a given URL is a valid image URL.
-	 *
-	 * @param {string} url - The URL to check.
-	 * @return {boolean} Returns true if the URL is a valid image URL, else false.
-	 */
-	function isValidImageUrl(url) {
-		const imageRegex = /\.(jpeg|jpg|gif|png|svg)$/i;
-		return imageRegex.test(url);
-	}
 
 	/* Body */
-
-	const postBody = document.createElement('p');
+	const bids = document.createElement('p');
+	bids.classList.add(
+		'm-0'
+	)
+	bids.innerText = `Bids: ${postData._count.bids}`;
+	const postBody = document.createElement('div');
+	const postBodySpacer = document.createElement('hr');
+	const postDescription = document.createElement('p');
 	postBody.classList.add(
 		'post-body',
 		'card-text',
-		'mx-auto',
 		'm-0',
 		'p-3',
 		'bg-dark',
 		'text-light'
 	);
-	postBody.innerText = postData.description;
+	postDescription.innerText = postData.description;
+	postBody.append(postDescription,postBodySpacer, bids);
 	container.appendChild(postBody);
 
 	/* Details Container */
@@ -92,8 +98,30 @@ export function postTemplate(postData) {
 		'accent',
 		'p-md-3',
 		'rounded-bottom',
-		'align-items-center'
+		'align-items-center',
+		'justify-space-between'
 	);
+	const authorBody = document.createElement('span');
+	const author = document.createElement('p');
+	authorBody.classList.add(
+		'd-flex',
+		'align-items-center',
+		
+	)
+	author.classList.add(
+		'align-items-center',
+		'mb-0'
+		
+	)
+	author.innerText = `Author: ${postData.seller.name}`;
+
+	const authorAvatar = document.createElement('img');
+	authorAvatar.classList.add(
+		'avatarimg'
+	)
+	authorAvatar.src = postData.seller.avatar;
+
+	authorBody.append(author,authorAvatar);
 	
 	/* Buttons */
 
@@ -104,14 +132,28 @@ export function postTemplate(postData) {
 	const bidButton = document.createElement('button');
 	bidButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
 	bidButton.innerText = 'Place Bid';
+	postDetailsContainer.appendChild(authorBody);
 	postButtonGroup.appendChild(bidButton);
 	postDetailsContainer.appendChild(postButtonGroup);
 
 	/* Post Stats */
 
 	container.appendChild(postDetailsContainer);
+	const path = location.pathname;
 
+	
+	if(path === '/listing/'){
+		const newItem = document.createElement('h1')
+		newItem.innerText = 'hello world'
+		newItem.classList.add(
+			'bg-dark'
+		)
+		postWrapper.appendChild(newItem)
+		return postWrapper;
+		
+	} else{
 	return postWrapper;
+	}
 }
 
 /**

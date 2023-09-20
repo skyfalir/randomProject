@@ -13,8 +13,8 @@ const method = 'post';
 
 export async function create(postData) {
 	const createPostURL = API_AUCTION_URL + actions;
-  
-	const response = await fetch(createPostURL, {
+	console.log(postData)
+	const response = await authFetch(createPostURL, {
 	  method,
 	  body: JSON.stringify(postData),
 	  headers: {
