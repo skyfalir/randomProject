@@ -16,12 +16,13 @@ export async function get(id) {
 		throw new Error('Missing post Id');
 	}
 	const getPostURL = `${API_AUCTION_URL}${actions}/${id}?_seller=true&_bids=true`;
+	
 
 	const response = await authFetch(getPostURL);
 	
 	
 	const data = await response.json();
-
+	console.log( data)
 	return data
 	
 }
@@ -33,7 +34,7 @@ export async function get(id) {
  */
 
 export async function getPosts() {
-	const getPostURL = `${API_AUCTION_URL}${actions}?_seller=true`;
+	const getPostURL = `${API_AUCTION_URL}${actions}?_seller=true&_active=true`;
 
 	const response = await authFetch(getPostURL);
 	//console.log(await response.json())

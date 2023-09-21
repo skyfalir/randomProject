@@ -1,15 +1,17 @@
 import { getCredit, getName, isLoggedIn } from "../api/helpers/storage.mjs";
 import { logout } from "../handlers/logout.mjs";
+import { getProfile } from "../posts/getProfile.mjs";
 
 /**
  * Checks if the user is logged in and updates the navigation bar accordingly.
  */
+const profile = await getProfile();
 export function isLoggedInNav(){
     const navMenu = document.querySelector('#navMenu');
 
     if (isLoggedIn()) {
         const name = getName();
-        const credits = getCredit();
+        const credits = profile.credits;
 
 
         navMenu.innerHTML += 

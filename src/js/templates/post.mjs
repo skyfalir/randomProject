@@ -1,19 +1,21 @@
+import { placeBid } from "../handlers/placeBid.mjs";
+import { put } from "../posts/put.mjs";
+
 /**
  * Creates the template for a post.
- * 
+ *
  * @param {object} postData - The post data.
  * @returns {HTMLDivElement} The post template.
  */
 export function postTemplate(postData) {
 	const postWrapper = document.createElement('div');
-	postWrapper.classList.add('post','card-body', 'mx-auto');
+	postWrapper.classList.add('post', 'card-body', 'mx-auto', 'p-5');
 
 	const container = document.createElement('div');
 	container.classList.add('card-body', 'my-2', 'text-center');
-	postWrapper.appendChild(container);
+	
 
 	/* Title */
-
 	const postTitle = document.createElement('h3');
 	postTitle.classList.add(
 		'post-title',
@@ -33,8 +35,6 @@ export function postTemplate(postData) {
 	anchor.style = 'text-decoration: none';
 	anchor.appendChild(postTitle);
 
-	container.appendChild(anchor);
-
 	/* Image */
 	/**
 	 * Checks if a given URL is a valid image URL.
@@ -48,7 +48,7 @@ export function postTemplate(postData) {
 	}
 
 	const postImage = document.createElement('img');
-	postImage.classList.add('img-fluid', 'rounded-0', 'card-img');
+	postImage.classList.add( 'img-fluid', 'rounded-0', 'card-img');
 
 	const Placeholders = [
 		'https://picsum.photos/301',
@@ -65,14 +65,11 @@ export function postTemplate(postData) {
 
 	postImage.alt = 'Post Image';
 
-	container.appendChild(postImage);
-
+	
 
 	/* Body */
 	const bids = document.createElement('p');
-	bids.classList.add(
-		'm-0'
-	)
+	bids.classList.add('m-0');
 	bids.innerText = `Bids: ${postData._count.bids}`;
 	const postBody = document.createElement('div');
 	const postBodySpacer = document.createElement('hr');
@@ -86,8 +83,8 @@ export function postTemplate(postData) {
 		'text-light'
 	);
 	postDescription.innerText = postData.description;
-	postBody.append(postDescription,postBodySpacer, bids);
-	container.appendChild(postBody);
+	postBody.append(postDescription, postBodySpacer, bids);
+
 
 	/* Details Container */
 
@@ -103,56 +100,116 @@ export function postTemplate(postData) {
 	);
 	const authorBody = document.createElement('span');
 	const author = document.createElement('p');
-	authorBody.classList.add(
-		'd-flex',
-		'align-items-center',
-		
-	)
-	author.classList.add(
-		'align-items-center',
-		'mb-0'
-		
-	)
+	authorBody.classList.add('d-flex', 'align-items-center');
+	author.classList.add('align-items-center', 'mb-0');
 	author.innerText = `Author: ${postData.seller.name}`;
 
 	const authorAvatar = document.createElement('img');
-	authorAvatar.classList.add(
-		'avatarimg'
-	)
+	authorAvatar.classList.add('avatarimg');
 	authorAvatar.src = postData.seller.avatar;
 
-	authorBody.append(author,authorAvatar);
-	
+	authorBody.append(author, authorAvatar);
+
 	/* Buttons */
 
 	const postButtonGroup = document.createElement('div');
 	postButtonGroup.classList.add('btn-group', 'p-1');
 
-
 	const bidButton = document.createElement('button');
 	bidButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
-	bidButton.innerText = 'Place Bid';
+	bidButton.innerText = 'View Listing';
 	postDetailsContainer.appendChild(authorBody);
 	postButtonGroup.appendChild(bidButton);
 	postDetailsContainer.appendChild(postButtonGroup);
 
-	/* Post Stats */
-
+	// append elements to container
+	container.appendChild(anchor);
+	postWrapper.appendChild(container);
+	container.appendChild(postImage);
+	container.appendChild(postBody);
+	
 	container.appendChild(postDetailsContainer);
+
+
+	//get path
 	const path = location.pathname;
 
-	
-	if(path === '/listing/'){
-		const newItem = document.createElement('h1')
-		newItem.innerText = 'hello world'
-		newItem.classList.add(
-			'bg-dark'
+	if (path === '/listing/') {
+		postWrapper.classList.remove('post')
+		postWrapper.classList.add('m-0', 'p-0');
+		container.classList.remove('card-body', 'my-2', 'text-center');
+		container.classList.add(
+			'd-grid',
+			'grid-cols-1',
+			'text-center',
 		)
-		postWrapper.appendChild(newItem)
-		return postWrapper;
+
+		postWrapper.appendChild(anchor);
+		postWrapper.appendChild(container);
+		container.appendChild(postImage);
+		container.appendChild(postBody);
+		postWrapper.appendChild(postDetailsContainer);
+	
+		//get last bid
+
+		const lastBidAmount = Number(postData.bids[postData.bids.length - 1]?.amount + 1) || 0 + 1;
+
+		// Set bidding form container
+		const formContainer = document.createElement('div');
+		formContainer.classList.add('d-flex', 'justify-content-center', 'align-items-center');
+
+		const bidForm = document.createElement('form');
+		// Set label for input box
+		const bidLabel = document.createElement('label');
+		bidLabel.textContent = 'Bid Amount:';
+		bidLabel.classList.add('text-light', 'mx-2');
+		bidLabel.setAttribute('for', 'bidInput');
+
+		// Create Input for bidding
+		const bidInput = document.createElement('input');
+		bidInput.setAttribute('type', 'number');
+		bidInput.setAttribute('name', 'amount');
+		bidInput.setAttribute('id', 'bidInput');
+		// get last bid amount and display it while setting minimum bid amount.
+		bidInput.setAttribute('value', `${lastBidAmount}`);
+		bidInput.setAttribute('min', `${lastBidAmount}`);
+		// Append all elements to form
+		bidForm.appendChild(bidLabel);
+		bidForm.appendChild(bidInput);
 		
-	} else{
-	return postWrapper;
+		// Create button to place bids
+		const bidButton = document.createElement('button');
+		bidButton.textContent = 'Place bid'
+		bidButton.classList.add('btn','btn-secondary','mx-3')
+		bidButton.addEventListener('click', async function (event) {
+			event.preventDefault();
+			
+			const formData = new FormData(bidForm);
+			const bid = formData.get('amount');
+
+			const data = {
+				amount: Number(bid)
+			};
+
+			console.log(data) // what will this return 
+			try {
+				placeBid(data);
+			} catch (error) {
+				console.log(error);
+			}
+
+			
+		});
+
+		bidForm.appendChild(bidButton);
+
+		formContainer.appendChild(bidForm);
+
+		// Append form to post
+		postWrapper.appendChild(formContainer);
+		return postWrapper;
+	} else {
+		return postWrapper;
 	}
 }
 
