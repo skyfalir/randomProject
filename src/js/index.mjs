@@ -14,7 +14,7 @@ if (path === '/login/') {
 } else if (path === '/register/') {
 	listeners.setRegisterFormListener();
 }else if(path === '/profile/'){
-	listeners.setEditPostFormListener();
+	listeners.setEditAvatarListener();
 } else if (path === '/listings/' || path === '/listing/') {
 	listeners.setPostFormListener();
 	isLoggedInNav();

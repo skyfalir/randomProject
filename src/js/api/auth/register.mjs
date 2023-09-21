@@ -27,7 +27,7 @@ export async function register(profile) {
 	if (response.ok) {
 		return json;
 	} else {
-		// Login failed, display error message to user.
+		// Register failed, display error message to user.
 		throw new Error(json.errors[0].message);
 	}
 }
