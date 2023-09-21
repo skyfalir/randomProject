@@ -62,6 +62,12 @@ nav img {
 .edit-post{
     width: 500px;
 }
+.cursor{
+    cursor: not-allowed;
+}
+.text-disabled{
+    opacity: 40%;
+}
 #searchError{
     display: none;
 }

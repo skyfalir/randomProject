@@ -29,7 +29,7 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul id="navMenu" class="navbar-nav ms-auto">
 						<li class="nav-item">
-							<a class="nav-link" href="../feed">Feed</a>
+							<a class="nav-link" href="../listings/">Listings</a>
 						</li>
 						
 					</ul>
@@ -47,26 +47,13 @@
 										<label for="User Name" class="form-label"
 											>Name</label
 										>
-										<input
-											type="text"
-											name="name"
-											class="form-control"
-											id="name"
-											readonly
-											maxlength="140"
-										/>
+										<p id="profileName"></p>
 									</div>
 									<div class="mb-3">
 										<label for="Email" class="form-label"
 											>Email</label
 										>
-										<input
-											type="email"
-											name="email"
-											class="form-control"
-											id="emailAdress"
-											required
-										/>
+										<p id="profileEmail"></p>
 									</div>
 									<div class="mb-3">
 										<label for="media" class="form-label"
@@ -84,11 +71,7 @@
 										<label for="credits" class="form-label"
 											>Credits</label
 										>
-										<input
-											class="form-control"
-											name="credits"
-											id="postContent"
-										>
+										<p id="profileCredits"></p>
 									</div>
 									<div
 										class="my-1 d-flex justify-content-center align-items-center"
@@ -97,7 +80,7 @@
 											type="submit"
 											class="btn px-2 mt-4 btn-outline-secondary"
 										>
-											List Item
+											Update profile
 										</button>
 									</div>
 								</form>

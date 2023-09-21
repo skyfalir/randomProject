@@ -10,16 +10,18 @@ import { authFetch } from './authFetch.mjs';
  */
 
 
-const actions = `/profile${getName()}/media`;
-const method = 'put';
+const actions = `/profiles/${getName()}`;
+const method = 'GET';
 
-export async function update(postData) {
-	const createPostURL = `${API_AUCTION_URL}${actions}/${postData.id}`;
+export async function getProfile() {
+	const getProfileURL = `${API_AUCTION_URL}${actions}`;
 
-	const response = await authFetch(createPostURL, {
+	const response = await authFetch(getProfileURL,  {
 		method,
-		body: JSON.stringify(postData),
+		headers: {
+			'Content-Type': 'application/json',
+		}
 	});
-
-	return await response.json();
+	const profileData = response.json();
+	return await profileData;
 }
