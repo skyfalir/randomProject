@@ -8,7 +8,6 @@ import { clearPostsContainer } from './api/helpers/clearPosts.mjs';
 
 const path = location.pathname;
 
-
 if (path === '/login/') {
 	listeners.setloginFormListener();
 } else if (path === '/register/') {
@@ -17,7 +16,7 @@ if (path === '/login/') {
 	listeners.setEditProfileListener();
 	const profileData = await postmethod.getProfile();
 	const avatarImg = document.querySelector('#avatarImg');
-	avatarImg.src = `${profileData.avatar}`
+	avatarImg.src = `${profileData.avatar}`;
 } else if (path === '/listings/' || path === '/listing/') {
 	listeners.setPostFormListener();
 	isLoggedInNav();
@@ -41,7 +40,7 @@ if (path === '/login/') {
 			} else {
 				const posts = await postmethod.getPosts(postCount, isActive);
 				templates.renderPostTemplates(posts, postsContainer);
-				
+
 				toggleActiveButton.addEventListener('click', async (event) => {
 					event.preventDefault();
 					isActive = !isActive; // Toggle the active state
@@ -52,7 +51,7 @@ if (path === '/login/') {
 					try {
 						const posts = await postmethod.getPosts(postCount, isActive);
 						templates.renderPostTemplates(posts, postsContainer);
-						console.log(posts)
+						console.log(posts);
 					} catch (error) {
 						console.error(error);
 					}
@@ -65,4 +64,3 @@ if (path === '/login/') {
 	showPosts();
 	search();
 }
-

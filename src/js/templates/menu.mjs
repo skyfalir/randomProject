@@ -1,4 +1,4 @@
-import {  getName, isLoggedIn  } from '../api/helpers/storage.mjs';
+import { getName, isLoggedIn } from '../api/helpers/storage.mjs';
 import { logout } from '../handlers/logout.mjs';
 import { getProfile } from '../posts/getProfile.mjs';
 
@@ -12,7 +12,7 @@ export function isLoggedInNav() {
 	if (isLoggedIn()) {
 		const name = getName();
 		const credits = profile.credits;
-        const avatar = profile.avatar
+		const avatar = profile.avatar;
 
 		navMenu.innerHTML += `
         <li class="nav-item mx-2 text-center">

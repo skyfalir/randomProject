@@ -37,7 +37,7 @@ export function postTemplate(postData) {
 	anchor.style = 'text-decoration: none';
 	anchor.appendChild(postTitle);
 
-	/* Temp Image */
+	/* Temp Image Solution */
 
 	// // const postImage = document.createElement('img');
 	// // postImage.classList.add('img-fluid', 'rounded-0', 'card-img');
@@ -50,14 +50,27 @@ export function postTemplate(postData) {
 
 	/* Body */
 	const bids = document.createElement('p');
-	bids.classList.add('m-0', 'bidcount');
-	bids.innerText = `Bids: ${postData._count.bids}`;
+
+	const lastBidAmount =
+		Number(postData.bids[postData.bids.length - 1]?.amount + 1) || 0 + 1;
+
+	bids.classList.add('m-0', 'bidcount', 'accent', 'text-center', 'text-primary');
+	bids.innerText = `Last bid: ${lastBidAmount} Credits`;
 	const postBody = document.createElement('div');
-	const postBodySpacer = document.createElement('hr');
+
+	/* Description */
 	const postDescription = document.createElement('p');
-	postBody.classList.add('post-body', 'card-text', 'p-3', 'bg-secondary', 'text-light');
-	postDescription.classList.add('my-3');
-	postDescription.innerText = ` Description: ${postData.description}`;
+	postBody.classList.add(
+		'd-flex',
+		'justify-content-between',
+		'align-items-center',
+		'post-body',
+		'card-text',
+		'bg-secondary',
+		'text-light'
+	);
+	postDescription.classList.add('p-3', 'm-0', 'accent', 'text-center', 'text-primary');
+	postDescription.innerHTML = ` Description: ${postData.description}`;
 
 	/* Details Container */
 
@@ -73,7 +86,7 @@ export function postTemplate(postData) {
 	);
 	const authorBody = document.createElement('span');
 	const author = document.createElement('p');
-	authorBody.classList.add('d-flex', 'align-items-center');
+	authorBody.classList.add('d-flex', 'align-items-center', 'px-2');
 	author.classList.add('align-items-center', 'text-primary', 'author');
 	author.innerText = `${postData.seller.name}`;
 
@@ -95,24 +108,24 @@ export function postTemplate(postData) {
 		window.location.href = '../listing/' + `?id=${postData.id}`;
 	};
 	postButtonGroup.appendChild(bidButton);
-	postTitle.appendChild(authorBody);
 	postDetailsContainer.appendChild(postButtonGroup);
-	
-	
+
 	/* Images */
 
 	const prevButton = document.createElement('button');
-	prevButton.textContent = 'Previous Image';
-	prevButton.classList.add('btn', 'btn-primary', 'btn-sm');
+	prevButton.textContent = 'Last Image';
+	prevButton.classList.add('btn', 'btn-primary', 'btn-sm', 'm-1');
 
 	const nextButton = document.createElement('button');
 	nextButton.textContent = 'Next Image';
-	nextButton.classList.add('btn', 'btn-primary', 'btn-sm');
+	nextButton.classList.add('btn', 'btn-primary', 'btn-sm', 'm-1');
 
 	const imgNavBtnGroup = document.createElement('div');
-	imgNavBtnGroup.classList.add('btn-group', 'p-1');
+	imgNavBtnGroup.classList.add('btn-group');
 	imgNavBtnGroup.appendChild(prevButton);
 	imgNavBtnGroup.appendChild(nextButton);
+	const imgContainer = document.createElement('div');
+	imgContainer.classList.add('w-100', 'h-100');
 	const postImage = document.createElement('img');
 	let currentIndex = 0;
 
@@ -120,7 +133,7 @@ export function postTemplate(postData) {
 	function updateImage() {
 		postImage.src = postData.media[currentIndex];
 		postImage.alt = `Image ${currentIndex + 1}`;
-		postImage.classList.add('img-fluid', 'rounded-0', 'card-img');
+		postImage.classList.add('img-fluid', 'rounded-0', 'card-img', 'img-control');
 		postImage.onerror = function () {
 			postImage.src =
 				'https://placehold.co/600x400/black/BA2D0B?font=montserrat&text=no+image';
@@ -141,54 +154,61 @@ export function postTemplate(postData) {
 
 	// Initialize with the first image
 	updateImage();
-	console.log(postData.media);
-	postBody.append(imgNavBtnGroup, postDescription, postBodySpacer, bids);
+	postBody.append(imgNavBtnGroup, authorBody);
+	imgContainer.appendChild(postImage);
 	// Append elements to the container
 	container.appendChild(anchor);
-	container.appendChild(postImage); // Append the image element
+	container.appendChild(imgContainer); // Append the image element
 	container.appendChild(postBody);
+	container.append(postDescription, bids);
 	container.appendChild(postDetailsContainer);
 	postWrapper.appendChild(container);
 	postWrapper.appendChild(spacer);
-
 	//get path
 	const path = location.pathname;
 
 	if (path === '/listing/') {
-		console.log(postImage);
 		postWrapper.removeChild(spacer);
 		function handleScreenSize() {
 			console.log('handleScreenSize called');
 			const windowWidth = window.innerWidth;
-
+			postBody.classList.remove(
+				'd-flex',
+				'justify-content-between',
+				'align-items-center'
+			);
 			postWrapper.classList.remove('card-body', 'post', 'mx-auto', 'p-3');
 			postWrapper.classList.add('w-limit', 'p-2', 'w-100', 'h-100', 'mx-auto');
 			container.classList.remove('w-limit', 'card-body', 'my-2');
 			container.classList.add('d-flex', 'w-100');
-			postImage.classList.add('m-auto', 'w-75');
+			postImage.classList.add('mx-auto', 'img-control');
 			postImage.classList.remove('fluid-img', 'w-100');
+			postDetailsContainer.classList.remove(
+				'd-flex',
+				'align-items-center',
+				'justify-space-between'
+			);
+			postDetailsContainer.classList.add('mx-auto');
 
 			if (windowWidth < 900) {
 				// Responsive layout for small screens
-				container.classList.remove('d-flex', 'text-center', 'w-100');
-				postWrapper.classList.remove(
-					'w-limit',
-					'p-2',
-					'w-100',
-					'h-100',
-					'mx-auto'
-				);
-				postWrapper.classList.add('post', 'card-body', 'mx-auto');
+				container.classList.remove('d-flex', 'text-center', 'object-fit');
+				postWrapper.classList.remove('w-limit', 'p-2', 'w-100', 'h-100');
+				postWrapper.classList.add('post', 'card-body', 'mx-auto', 'text-center');
+
 				container.appendChild(anchor);
 				postWrapper.appendChild(container);
-				container.appendChild(postImage);
+				container.append(postDescription, bids);
+				container.appendChild(imgContainer);
 				container.appendChild(postBody);
+
 				container.appendChild(postDetailsContainer);
 			} else {
 				postWrapper.appendChild(anchor);
 				postWrapper.appendChild(container);
-				container.appendChild(postImage);
+				container.appendChild(imgContainer);
 				container.appendChild(postBody);
+				postWrapper.append(postDescription, bids);
 				postWrapper.appendChild(postDetailsContainer);
 			}
 		}
@@ -198,7 +218,9 @@ export function postTemplate(postData) {
 		postDetailsContainer.removeChild(postButtonGroup);
 
 		const bidderDetails = document.createElement('div');
-		bidderDetails.classList.add('my-2', 'd-flex', 'bidder-details', 'flex-column');
+		const bidderTitle = document.createElement('p');
+		bidderTitle.innerText = 'Bids:';
+		bidderDetails.classList.add('my-0', 'd-flex', 'bidder-details', 'flex-column');
 
 		// Loop through the array and create a <p> element for each bidder
 		postData.bids.forEach((bid) => {
@@ -214,7 +236,7 @@ export function postTemplate(postData) {
 				'bg-dark',
 				'rounded',
 				'p-2',
-				'my-1'
+				'm-1'
 			);
 			// Unsure if innerHTML is a security risk here, but the API should provide sanitized data.
 			bidderInfo.innerHTML = `
@@ -222,13 +244,10 @@ export function postTemplate(postData) {
 			<span class="credits"> ${bid.amount}c</span>`;
 			bidderDetails.appendChild(bidderInfo);
 		});
-
+		postBody.appendChild(bidderTitle);
 		postBody.appendChild(bidderDetails);
 
 		//get last bid
-
-		const lastBidAmount =
-			Number(postData.bids[postData.bids.length - 1]?.amount + 1) || 0 + 1;
 
 		// Set bidding form container
 		const formContainer = document.createElement('div');

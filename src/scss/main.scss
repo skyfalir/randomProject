@@ -11,120 +11,146 @@
 nav img {
     width: 50px
 }
-.nav-link:hover{
-    color: #ffffff!important;
+
+.nav-link:hover {
+    color: #ffffff !important;
 
 }
-.credits{
+
+.credits {
     color: #ffbe44;
     margin: auto;
 }
 
-.login-page{
+.login-page {
     background-color: $primary;
     opacity: 1;
     background-size: 29.8px 10px;
-    background-image:  repeating-linear-gradient(to left, $primary, darken($primary , 100%) 2px, $dark 2px, $dark);
+    background-image: repeating-linear-gradient(to left, $primary, darken($primary, 100%) 2px, $dark 2px, $dark);
 }
 
-.login{
+.login {
     background: $secondary;
     color: #999;
     max-width: 400px;
 }
 
-.form-control{
-    border: var(--bs-border-width) solid $secondary; 
+.form-control {
+    border: var(--bs-border-width) solid $secondary;
 }
-.account-icon{
+
+.account-icon {
     width: 25px;
 
 }
-.post{
+
+.post {
     background-color: var(--c-primary);
     max-width: 1200px;
 }
-.accent{
+
+.accent {
     background: $secondary;
     background: linear-gradient(75deg, $secondary 0%, lighten($secondary, 10%) 80%);
     background-size: 500%;
 }
-.w-limit{
+
+.w-limit {
     max-width: 1550px;
 }
-.form-width{
+
+.form-width {
     max-width: 690px;
 }
-.bg-dark-subtle{
+
+.bg-dark-subtle {
     background: #1d2124;
 }
-.details-container{
+
+.details-container {
     justify-content: space-between
 }
-.avatarimg{
+
+.avatarimg {
     display: inline-block;
     width: 50px;
     height: 50px;
     border-radius: 50%
 }
-.edit-post{
+
+.edit-post {
     width: 500px;
 }
-.cursor{
+
+.cursor {
     cursor: not-allowed;
 }
-.text-disabled{
+
+.text-disabled {
     opacity: 40%;
 }
-.text-light:hover{
-    color: $primary!important
+
+.text-light:hover {
+    color: $primary !important
 }
+
 *::placeholder {
-    color: #999!important;
+    color: #999 !important;
 }
-.bidder-details{
+
+.bidder-details {
     overflow-y: auto;
     max-height: 600px;
     min-height: 500px;
     border-radius: 10px;
 }
-.bid-input{
+
+.bid-input {
     min-width: 60px;
     max-width: 100px
 }
-.cposition{
+
+.cposition {
     margin-top: -10px;
 }
-#searchError{
+
+#searchError {
     display: none;
 }
-.bidcount{
+
+.bidcount {
     font-size: 20px;
     font-weight: 800;
 }
-.author{
+
+.author {
     font-size: medium;
     margin-top: 25px;
     margin-left: 10px;
 }
-.bg-author{
+
+.bg-author {
     background: #0000004c;
+}
+
+.img-control {
+    object-fit: cover;
 }
 
 /*Setting font weights*/
 
 .font-weight-light {
-    font-family: 'Montserrat light'!important; 
-  }
-  
-  .font-weight-regular {
-    font-family: 'Montserrat regular'!important;
-  }
-  
-  .font-weight-bold {
-    font-family: 'Montserrat bold'!important;
-  }
-  
+    font-family: 'Montserrat light' !important;
+}
+
+.font-weight-regular {
+    font-family: 'Montserrat regular' !important;
+}
+
+.font-weight-bold {
+    font-family: 'Montserrat bold' !important;
+}
+
 
 /* Making the scrollbar a little nicer */
 
@@ -139,6 +165,7 @@ nav img {
     -webkit-border-radius: 100px;
     transition: 0.3s;
 }
+
 *::-webkit-scrollbar-thumb:vertical:hover {
     background: rgba(255, 0, 0, .3);
 }
