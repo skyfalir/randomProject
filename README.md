@@ -1,2 +1,2 @@
-# css-frameworks-ca
-Replace this text with a description of your social media project.
+# Semester project - nAuction website
+A simple auction website.
