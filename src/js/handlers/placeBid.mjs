@@ -18,6 +18,7 @@ export async function placeBid(data) {
 		if (response.ok) {
 			console.log('POST request successful');
 			alert(`Bid placed!`);
+			window.location.reload();
 		} else {
 			console.error('POST request failed');
 		}

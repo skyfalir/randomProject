@@ -52,7 +52,7 @@ export function postTemplate(postData) {
 	const bids = document.createElement('p');
 
 	const lastBidAmount =
-		Number(postData.bids[postData.bids.length - 1]?.amount + 1) || 0 + 1;
+		Number(postData.bids[postData.bids.length - 1]?.amount) || 0;
 
 	bids.classList.add('m-0', 'bidcount', 'accent', 'text-center', 'text-primary');
 	bids.innerText = `Last bid: ${lastBidAmount} Credits`;
@@ -273,8 +273,8 @@ export function postTemplate(postData) {
 		bidInput.setAttribute('name', 'amount');
 		bidInput.setAttribute('id', 'bidInput');
 		// get last bid amount, display it and set minimum bid amount.
-		bidInput.setAttribute('value', `${lastBidAmount}`);
-		bidInput.setAttribute('min', `${lastBidAmount}`);
+		bidInput.setAttribute('value', `${lastBidAmount + 1}`);
+		bidInput.setAttribute('min', `${lastBidAmount + 1}`);
 		// Append all elements to form
 		bidForm.appendChild(bidLabel);
 		bidForm.appendChild(bidInput);
