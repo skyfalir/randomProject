@@ -4,6 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
 		<link rel="stylesheet" href="../dist/css/main.css" />
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous" defer></script>
 	<script type="module" src="../src/js/index.mjs" defer ></script>
@@ -12,8 +13,8 @@
 	<body class="bg-dark">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-black">
 			<div class="container">
-				<a class="navbar-brand" href="#"
-					><img src="../assets/img/Peek-1.png" alt="Logo"
+				<a class="navbar-brand" href="../listings/"
+					><img src="../assets/img/nauction logo.png" alt="Logo"
 				/></a>
 				<button
 					class="navbar-toggler"
@@ -27,9 +28,9 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul id="navMenu" class="navbar-nav ms-auto">
+					<ul id="navMenu" class="navbar-nav ">
 						<li class="nav-item">
-							<a class="nav-link" href="../listings/">Listings</a>
+							<a class="nav-link text-primary" href="../listings/"> | Listings</a>
 						</li>
 						
 					</ul>
@@ -37,28 +38,32 @@
 			</div>
 		</nav>
 
-		<div class="d-flex justify-content-center">
-			<div class="edit-post mt-5 bg-dark rounded p-5 text-secondary">
-								<h3 class="text-secondary text-center pb-1 mb-5">
+		<div class="d-flex justify-content-center ">
+			<div class="edit-post mt-5 bg-dark rounded p-5 text-primary">
+								<h3 class="text-primary text-center pb-1 mb-5">
 									Edit Profile
 								</h3>
 								<form id="editForm" enctype="multipart/form-data">
 									<div class="mb-3">
 										<label for="User Name" class="form-label"
-											>Name</label
+											>Name:</label
 										>
 										<p id="profileName"></p>
 									</div>
 									<div class="mb-3">
 										<label for="Email" class="form-label"
-											>Email</label
+											>Email:</label
 										>
 										<p id="profileEmail"></p>
 									</div>
-									<div class="mb-3">
+									<div class="mb-4">
+										
 										<label for="media" class="form-label"
-											>Avatar</label
+											>Avatar:</label
 										>
+										<br>
+										<!-- I know.. lazy using gif loading image instead of css	-->
+										<img id="avatarImg" alt="avatar" class="w-100 mx-auto mb-2" src="../assets/img/load.gif">
 										<input
 											type="text"
 											name="avatar"
@@ -69,7 +74,7 @@
 									</div>
 									<div class="mb-1">
 										<label for="credits" class="form-label"
-											>Credits</label
+											>Credits:</label
 										>
 										<p id="profileCredits"></p>
 									</div>
@@ -78,7 +83,7 @@
 									>
 										<button
 											type="submit"
-											class="btn px-2 mt-4 btn-outline-secondary"
+											class="btn px-2 mt-4 btn-outline-primary"
 										>
 											Update profile
 										</button>

@@ -22,7 +22,6 @@ export async function get(id) {
 	
 	
 	const data = await response.json();
-	console.log( data)
 	return data
 	
 }
@@ -33,12 +32,13 @@ export async function get(id) {
  * @return {Promise} A Promise that resolves with an object containing posts.
  */
 
-export async function getPosts() {
-	const getPostURL = `${API_AUCTION_URL}${actions}?_seller=true&_active=true`;
-
+export async function getPosts(postCount,isActive) {
+	const activeFlag = isActive ? '&_active=true' : '';
+	const getPostURL = `${API_AUCTION_URL}${actions}?_seller=true${activeFlag}`;
 	const response = await authFetch(getPostURL);
-	//console.log(await response.json())
-	return await response.json();
+	const data = await response.json();
+	const limit = data.slice(0, postCount);
+	return limit;
 
 	
 }

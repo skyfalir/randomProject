@@ -5,31 +5,36 @@
 
 
 * {
-    font-family: 'Montserrat medium';
+    font-family: 'Montserrat regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 nav img {
     width: 50px
 }
-.navbar-nav p{
-    color: #ffd644;
+.nav-link:hover{
+    color: #ffffff!important;
+
+}
+.credits{
+    color: #ffbe44;
+    margin: auto;
 }
 
 .login-page{
     background-color: $primary;
     opacity: 1;
     background-size: 29.8px 10px;
-    background-image:  repeating-linear-gradient(to left, $primary, #3e818d 2px, $primary 2px, $primary);
+    background-image:  repeating-linear-gradient(to left, $primary, darken($primary , 100%) 2px, $dark 2px, $dark);
 }
 
 .login{
-    background: #101213;
+    background: $secondary;
     color: #999;
     max-width: 400px;
 }
 
 .form-control{
-    border: var(--bs-border-width) solid $cyan; 
+    border: var(--bs-border-width) solid $secondary; 
 }
 .account-icon{
     width: 25px;
@@ -37,15 +42,18 @@ nav img {
 }
 .post{
     background-color: var(--c-primary);
-    max-width: 900px;
+    max-width: 1200px;
 }
 .accent{
-    background: rgb(0,213,255);
-    background: linear-gradient(45deg, $cyan 0%, rgb(77, 234, 255) 20%);
+    background: $secondary;
+    background: linear-gradient(75deg, $secondary 0%, lighten($secondary, 10%) 80%);
     background-size: 500%;
 }
 .w-limit{
-    max-width: 1280px;
+    max-width: 1550px;
+}
+.form-width{
+    max-width: 690px;
 }
 .bg-dark-subtle{
     background: #1d2124;
@@ -56,7 +64,7 @@ nav img {
 .avatarimg{
     display: inline-block;
     width: 50px;
-    margin-left: 10px;
+    height: 50px;
     border-radius: 50%
 }
 .edit-post{
@@ -68,6 +76,95 @@ nav img {
 .text-disabled{
     opacity: 40%;
 }
+.text-light:hover{
+    color: $primary!important
+}
+*::placeholder {
+    color: #999!important;
+}
+.bidder-details{
+    overflow-y: auto;
+    max-height: 600px;
+    min-height: 500px;
+    border-radius: 10px;
+}
+.bid-input{
+    min-width: 60px;
+    max-width: 100px
+}
+.cposition{
+    margin-top: -10px;
+}
 #searchError{
     display: none;
+}
+.bidcount{
+    font-size: 20px;
+    font-weight: 800;
+}
+.author{
+    font-size: medium;
+    margin-top: 25px;
+    margin-left: 10px;
+}
+.bg-author{
+    background: #0000004c;
+}
+
+/*Setting font weights*/
+
+.font-weight-light {
+    font-family: 'Montserrat light'!important; 
+  }
+  
+  .font-weight-regular {
+    font-family: 'Montserrat regular'!important;
+  }
+  
+  .font-weight-bold {
+    font-family: 'Montserrat bold'!important;
+  }
+  
+
+/* Making the scrollbar a little nicer */
+
+*::-webkit-scrollbar:hover {
+    background-color: rgba(57, 57, 57, .47);
+}
+
+*::-webkit-scrollbar-thumb:vertical {
+    background: rgba(255, 0, 0, .3);
+    overflow-y: auto;
+    border: 0px solid;
+    -webkit-border-radius: 100px;
+    transition: 0.3s;
+}
+*::-webkit-scrollbar-thumb:vertical:hover {
+    background: rgba(255, 0, 0, .3);
+}
+
+*::-webkit-scrollbar-thumb:vertical:active {
+    background: rgba(255, 0, 0, .61);
+    -webkit-border-radius: 100px;
+}
+
+*::-webkit-scrollbar {
+    width: 0.2em;
+    overflow: visible;
+    overflow-y: auto;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+*::-webkit-scrollbar-track {
+    opacity: 0;
+    background: #f000;
+    -webkit-transition: all .5s;
+}
+
+*::-webkit-scrollbar-thumb {
+    overflow: visible;
+    overflow-y: auto;
+    border-radius: 4px;
+    background: rgba(255, 0, 0, .16);
 }
