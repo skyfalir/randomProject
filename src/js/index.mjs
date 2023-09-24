@@ -32,35 +32,72 @@ if (path === '/login/') {
 		const postsContainer = document.querySelector('#userPost');
 		const postCount = 10;
 		let isActive = true; // Default active state for list view
+		let offset = 0;
+		let isLoading = false; // Flag to prevent multiple loading
 		const toggleActiveButton = document.getElementById('toggleActiveButton');
-		try {
-			if (id) {
-				const post = await postmethod.get(id);
-				templates.renderPostTemplate(post, postsContainer);
+	  
+		// Function to load more posts when scrolling to the bottom
+		async function loadMorePosts() {
+		  if (isLoading) {
+			return; // Prevent multiple loading
+		  }
+	  
+		  isLoading = true;
+		  try {
+			const newPosts = await postmethod.getPosts(postCount, offset, isActive);
+			if (newPosts.length > 0) {
+			  templates.renderPostTemplates(newPosts, postsContainer);
+			  offset += postCount; // Increase the offset
+			  listeners.filterPosts();
 			} else {
-				const posts = await postmethod.getPosts(postCount, isActive);
-				templates.renderPostTemplates(posts, postsContainer);
-
-				toggleActiveButton.addEventListener('click', async (event) => {
-					event.preventDefault();
-					isActive = !isActive; // Toggle the active state
-					toggleActiveButton.textContent = isActive
-						? 'Show all posts'
-						: 'Show active only';
-					clearPostsContainer(postsContainer);
-					try {
-						const posts = await postmethod.getPosts(postCount, isActive);
-						templates.renderPostTemplates(posts, postsContainer);
-						console.log(posts);
-					} catch (error) {
-						console.error(error);
-					}
-				});
+			  // No more posts to load, remove the scroll event listener
+			  window.removeEventListener('scroll', onScroll);
 			}
-		} catch (error) {
+		  } catch (error) {
 			console.error(error);
+		  } finally {
+			isLoading = false;
+		  }
 		}
-	}
-	showPosts();
-	search();
-}
+	  
+		function onScroll() {
+		  if (
+			window.innerHeight + window.scrollY >=
+			document.body.offsetHeight - 100
+		  ) {
+			// User has scrolled to the bottom, load more posts
+			loadMorePosts();
+		  }
+		}
+	  
+		try {
+		  if (id) {
+			const post = await postmethod.get(id);
+			templates.renderPostTemplate(post, postsContainer);
+		  } else {
+			// Initial load of posts
+			const posts = await postmethod.getPosts(postCount, offset, isActive);
+			templates.renderPostTemplates(posts, postsContainer);
+	  
+			toggleActiveButton.addEventListener('click', async (event) => {
+			  event.preventDefault();
+			  isActive = !isActive; // Toggle the active state
+			  toggleActiveButton.textContent = isActive
+				? 'Show all posts'
+				: 'Show active only';
+			  clearPostsContainer(postsContainer);
+			  offset = 0; // Reset offset when changing filters
+			  loadMorePosts(); // Load the initial set of posts
+			});
+	  
+			// Add scroll event listener for infinite scrolling
+			window.addEventListener('scroll', onScroll);
+		  }
+		} catch (error) {
+		  console.error(error);
+		}
+	  }
+	  showPosts();
+	  search();
+	  
+	}	  
