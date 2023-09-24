@@ -1,143 +1,314 @@
+import { placeBid } from '../handlers/placeBid.mjs';
+
 /**
  * Creates the template for a post.
- * 
+ *
  * @param {object} postData - The post data.
  * @returns {HTMLDivElement} The post template.
  */
 export function postTemplate(postData) {
 	const postWrapper = document.createElement('div');
-	postWrapper.classList.add('post','card-body', 'mx-auto');
+	postWrapper.classList.add('post', 'card-body', 'mx-auto');
 
 	const container = document.createElement('div');
-	container.classList.add('card-body', 'my-2', 'text-center');
-	postWrapper.appendChild(container);
+	container.classList.add('card-body', 'my-2', 'w-limit', 'text-center', 'mx-auto');
+
+	const spacer = document.createElement('hr');
+	spacer.classList.add('border-primary', 'border-4', 'my-5', 'w-100', 'mx-auto');
 
 	/* Title */
-
-	const postTitle = document.createElement('h5');
+	const postTitle = document.createElement('h2');
 	postTitle.classList.add(
 		'post-title',
 		'card-title',
-		'bg-dark',
+		'bg-secondary',
 		'rounded-top',
 		'p-3',
 		'm-0',
-		'text-secondary'
+		'text-primary',
+		'text-center'
 	);
 	postTitle.innerText = postData.title;
 
 	/* link to post */
 
 	const anchor = document.createElement('a');
-	anchor.href = '../posts/' + `?id=${postData.id}`;
+	anchor.href = '../listing/' + `?id=${postData.id}`;
 	anchor.style = 'text-decoration: none';
 	anchor.appendChild(postTitle);
 
-	container.appendChild(anchor);
+	/* Temp Image Solution */
 
-	/* Image */
-
-	const postImage = document.createElement('img');
-	postImage.classList.add('img-fluid', 'rounded-0', 'card-img');
-
-	const Placeholders = [
-		'https://picsum.photos/301',
-		'https://picsum.photos/302',
-		'https://picsum.photos/303',
-	];
-
-	if (isValidImageUrl(postData.media)) {
-		postImage.src = postData.media;
-	} else {
-		const randomIndex = Math.floor(Math.random() * Placeholders.length);
-		postImage.src = Placeholders[randomIndex];
-	}
-
-	postImage.alt = 'Post Image';
-
-	container.appendChild(postImage);
-
-	/**
-	 * Checks if a given URL is a valid image URL.
-	 *
-	 * @param {string} url - The URL to check.
-	 * @return {boolean} Returns true if the URL is a valid image URL, else false.
-	 */
-	function isValidImageUrl(url) {
-		const imageRegex = /\.(jpeg|jpg|gif|png|svg)$/i;
-		return imageRegex.test(url);
-	}
+	// // const postImage = document.createElement('img');
+	// // postImage.classList.add('img-fluid', 'rounded-0', 'card-img');
+	// // postImage.src = postData.media;
+	// // console.log(postData.media)
+	// // postImage.onerror = function () {
+	// // 	postImage.src = 'https://placehold.co/600x400/black/BA2D0B?font=montserrat&text=no+image';
+	// // }
+	// // postImage.alt = 'Post Image';
 
 	/* Body */
+	const bids = document.createElement('p');
 
-	const postBody = document.createElement('p');
+	const lastBidAmount =
+		Number(postData.bids[postData.bids.length - 1]?.amount) || 0;
+
+	bids.classList.add('m-0', 'bidcount', 'accent', 'text-center', 'text-primary');
+	bids.innerText = `Last bid: ${lastBidAmount} Credits`;
+	const postBody = document.createElement('div');
+
+	/* Description */
+	const postDescription = document.createElement('p');
 	postBody.classList.add(
-		'post-body',
-		'card-text',
-		'mx-auto',
-		'm-0',
-		'p-3',
-		'bg-dark',
-		'text-light'
-	);
-	postBody.innerText = postData.body;
-	container.appendChild(postBody);
-
-	/* Buttons Container */
-
-	const postButtonsContainer = document.createElement('div');
-	postButtonsContainer.classList.add(
 		'd-flex',
 		'justify-content-between',
+		'align-items-center',
+		'post-body',
+		'card-text',
+		'bg-secondary',
+		'text-light'
+	);
+	postDescription.classList.add('p-3', 'm-0', 'accent', 'text-center', 'text-primary');
+	postDescription.innerHTML = ` Description: ${postData.description}`;
+
+	/* Details Container */
+
+	const postDetailsContainer = document.createElement('div');
+	postDetailsContainer.classList.add(
+		'd-flex',
+		'details-container',
 		'accent',
 		'p-md-3',
 		'rounded-bottom',
-		'align-items-center'
+		'align-items-center',
+		'justify-space-between'
 	);
+	const authorBody = document.createElement('span');
+	const author = document.createElement('p');
+	authorBody.classList.add('d-flex', 'align-items-center', 'px-2');
+	author.classList.add('align-items-center', 'text-primary', 'author');
+	author.innerText = `${postData.seller.name}`;
 
-	/* Flair Buttons */
+	const authorAvatar = document.createElement('img');
+	authorAvatar.classList.add('avatarimg');
+	authorAvatar.src = postData.seller.avatar;
 
-	const postButtonsGroup = document.createElement('div');
-	postButtonsGroup.classList.add('btn-group', 'p-1');
+	authorBody.append(authorAvatar, author);
 
-	const likeButton = document.createElement('button');
-	likeButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
-	likeButton.innerText = 'Like';
-	postButtonsGroup.appendChild(likeButton);
+	/* Buttons */
 
-	const editButton = document.createElement('button');
-	editButton.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'editButton');
-	editButton.addEventListener('click', () => {
-		window.location.href = `/posts/edit/?id=${postData.id}`;
+	const postButtonGroup = document.createElement('div');
+	postButtonGroup.classList.add('btn-group', 'p-1', 'mx-auto');
+
+	const bidButton = document.createElement('button');
+	bidButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
+	bidButton.innerText = 'View Listing';
+	bidButton.onclick = function () {
+		window.location.href = '../listing/' + `?id=${postData.id}`;
+	};
+	postButtonGroup.appendChild(bidButton);
+	postDetailsContainer.appendChild(postButtonGroup);
+
+	/* Images */
+
+	const prevButton = document.createElement('button');
+	prevButton.textContent = 'Last Image';
+	prevButton.classList.add('btn', 'btn-primary', 'btn-sm', 'm-1');
+
+	const nextButton = document.createElement('button');
+	nextButton.textContent = 'Next Image';
+	nextButton.classList.add('btn', 'btn-primary', 'btn-sm', 'm-1');
+
+	const imgNavBtnGroup = document.createElement('div');
+	imgNavBtnGroup.classList.add('btn-group');
+	imgNavBtnGroup.appendChild(prevButton);
+	imgNavBtnGroup.appendChild(nextButton);
+	const imgContainer = document.createElement('div');
+	imgContainer.classList.add('w-100', 'h-100');
+	const postImage = document.createElement('img');
+	let currentIndex = 0;
+
+	// Function to update the displayed image
+	function updateImage() {
+		postImage.src = postData.media[currentIndex];
+		postImage.alt = `Image ${currentIndex + 1}`;
+		postImage.classList.add('img-fluid', 'rounded-0', 'card-img', 'img-control');
+		postImage.onerror = function () {
+			postImage.src =
+				'https://placehold.co/600x400/black/BA2D0B?font=montserrat&text=no+image';
+		};
+	}
+
+	// shows the previous image
+	prevButton.addEventListener('click', function () {
+		currentIndex = (currentIndex - 1 + postData.media.length) % postData.media.length;
+		updateImage();
 	});
-	editButton.innerText = 'Edit';
-	postButtonsGroup.appendChild(editButton);
 
-	const commentButton = document.createElement('button');
-	commentButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
-	commentButton.innerText = 'Comment';
-	postButtonsGroup.appendChild(commentButton);
-	postButtonsContainer.appendChild(postButtonsGroup);
+	// shows the next image
+	nextButton.addEventListener('click', function () {
+		currentIndex = (currentIndex + 1) % postData.media.length;
+		updateImage();
+	});
 
-	/* Post Stats */
+	// Initialize with the first image
+	updateImage();
+	postBody.append(imgNavBtnGroup, authorBody);
+	imgContainer.appendChild(postImage);
+	// Append elements to the container
+	container.appendChild(anchor);
+	container.appendChild(imgContainer); // Append the image element
+	container.appendChild(postBody);
+	container.append(postDescription, bids);
+	container.appendChild(postDetailsContainer);
+	postWrapper.appendChild(container);
+	postWrapper.appendChild(spacer);
+	//get path
+	const path = location.pathname;
 
-	const postStats = document.createElement('small');
-	postStats.classList.add('text-primary');
+	if (path === '/listing/') {
+		postWrapper.removeChild(spacer);
+		function handleScreenSize() {
+			console.log('handleScreenSize called');
+			const windowWidth = window.innerWidth;
+			postBody.classList.remove(
+				'd-flex',
+				'justify-content-between',
+				'align-items-center'
+			);
+			postWrapper.classList.remove('card-body', 'post', 'mx-auto', 'p-3');
+			postWrapper.classList.add('w-limit', 'p-2', 'w-100', 'h-100', 'mx-auto');
+			container.classList.remove('w-limit', 'card-body', 'my-2');
+			container.classList.add('d-flex', 'w-100');
+			postImage.classList.add('mx-auto', 'img-control');
+			postImage.classList.remove('fluid-img', 'w-100');
+			postDetailsContainer.classList.remove(
+				'd-flex',
+				'align-items-center',
+				'justify-space-between'
+			);
+			postDetailsContainer.classList.add('mx-auto');
 
-	const postLikes = document.createElement('span');
-	postLikes.classList.add('me-2');
-	postLikes.innerText = '10 likes';
-	postStats.appendChild(postLikes);
+			if (windowWidth < 900) {
+				// Responsive layout for small screens
+				container.classList.remove('d-flex', 'text-center', 'object-fit');
+				postWrapper.classList.remove('w-limit', 'p-2', 'w-100', 'h-100');
+				postWrapper.classList.add('post', 'card-body', 'mx-auto', 'text-center');
 
-	const postComments = document.createElement('span');
-	postComments.classList.add('me-2');
-	postComments.innerText = '5 comments';
+				container.appendChild(anchor);
+				postWrapper.appendChild(container);
+				container.append(postDescription, bids);
+				container.appendChild(imgContainer);
+				container.appendChild(postBody);
 
-	postStats.appendChild(postComments);
-	postButtonsContainer.appendChild(postStats);
-	container.appendChild(postButtonsContainer);
+				container.appendChild(postDetailsContainer);
+			} else {
+				postWrapper.appendChild(anchor);
+				postWrapper.appendChild(container);
+				container.appendChild(imgContainer);
+				container.appendChild(postBody);
+				postWrapper.append(postDescription, bids);
+				postWrapper.appendChild(postDetailsContainer);
+			}
+		}
+		window.addEventListener('resize', handleScreenSize);
+		handleScreenSize();
 
-	return postWrapper;
+		postDetailsContainer.removeChild(postButtonGroup);
+
+		const bidderDetails = document.createElement('div');
+		const bidderTitle = document.createElement('p');
+		bidderTitle.innerText = 'Bids:';
+		bidderDetails.classList.add('my-0', 'd-flex', 'bidder-details', 'flex-column');
+
+		// Loop through the array and create a <p> element for each bidder
+		postData.bids.forEach((bid) => {
+			const bidderInfo = document.createElement('span');
+			bidderInfo.classList.add(
+				'd-flex',
+				'align-content-center',
+				'justify-content-center',
+				'flex-row',
+				'card-info',
+				'bg-secondary',
+				'text-light',
+				'bg-dark',
+				'rounded',
+				'p-2',
+				'm-1'
+			);
+			// Unsure if innerHTML is a security risk here, but the API should provide sanitized data.
+			bidderInfo.innerHTML = `
+			<p class="text-primary my-auto mx-auto"> ${bid.bidderName} bid:</p>
+			<span class="credits"> ${bid.amount}c</span>`;
+			bidderDetails.appendChild(bidderInfo);
+		});
+		postBody.appendChild(bidderTitle);
+		postBody.appendChild(bidderDetails);
+
+		//get last bid
+
+		// Set bidding form container
+		const formContainer = document.createElement('div');
+		formContainer.classList.add('p-0', 'm-0');
+
+		const bidForm = document.createElement('form');
+		bidForm.classList.add(
+			'd-flex',
+			'justify-content-center',
+			'align-items-center',
+			'text-center'
+		);
+		// Set label for input box
+		const bidLabel = document.createElement('label');
+		bidLabel.textContent = 'Your bid: ';
+		bidLabel.classList.add('text-primary', 'font-weight-bold', 'mx-2');
+		bidLabel.setAttribute('for', 'bidInput');
+
+		// Create Input for bidding
+		const bidInput = document.createElement('input');
+		bidInput.classList.add('form-control', 'bid-input');
+		bidInput.setAttribute('type', 'number');
+		bidInput.setAttribute('name', 'amount');
+		bidInput.setAttribute('id', 'bidInput');
+		// get last bid amount, display it and set minimum bid amount.
+		bidInput.setAttribute('value', `${lastBidAmount + 1}`);
+		bidInput.setAttribute('min', `${lastBidAmount + 1}`);
+		// Append all elements to form
+		bidForm.appendChild(bidLabel);
+		bidForm.appendChild(bidInput);
+
+		// Create button to place bids
+		const bidButton = document.createElement('button');
+		bidButton.textContent = 'Place bid';
+		bidButton.classList.add('btn', 'btn-secondary', 'mx-1');
+		bidButton.addEventListener('click', async function (event) {
+			event.preventDefault();
+
+			const formData = new FormData(bidForm);
+			const bid = formData.get('amount');
+
+			const data = {
+				amount: Number(bid),
+			};
+			try {
+				placeBid(data);
+			} catch (error) {
+				console.log(error);
+			}
+		});
+
+		bidForm.appendChild(bidButton);
+
+		formContainer.appendChild(bidForm);
+
+		// Append bid form to post
+		postDetailsContainer.appendChild(formContainer);
+		return postWrapper;
+	} else {
+		return postWrapper;
+	}
 }
 
 /**

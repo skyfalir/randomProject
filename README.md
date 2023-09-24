@@ -1,2 +1,2 @@
-# randomProject
-its totally random
+# Semester project - nAuction website
+A simple auction website.

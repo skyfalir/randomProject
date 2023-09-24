@@ -1,4 +1,4 @@
-import { API_SOCIAL_URL } from '../constants.mjs';
+import { API_AUCTION_URL } from '../constants.mjs';
 
 /**
  * logs a user in.
@@ -11,7 +11,7 @@ const action = '/auth/login';
 const method = 'post';
 
 export async function login(profile) {
-	const loginURL = API_SOCIAL_URL + action;
+	const loginURL = API_AUCTION_URL + action;
 	const body = JSON.stringify(profile);
 
 	const response = await fetch(loginURL, {

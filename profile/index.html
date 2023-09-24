@@ -4,16 +4,17 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
 		<link rel="stylesheet" href="../dist/css/main.css" />
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous" defer></script>
-	<script type="module" src="/profile/index.mjs" defer ></script>
+	<script type="module" src="../src/js/index.mjs" defer ></script>
 		<title>Profile Page</title>
 	</head>
 	<body class="bg-dark">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-black">
 			<div class="container">
-				<a class="navbar-brand" href="#"
-					><img src="../assets/img/Peek-1.png" alt="Logo"
+				<a class="navbar-brand" href="../listings/"
+					><img src="../assets/img/nauction logo.png" alt="Logo"
 				/></a>
 				<button
 					class="navbar-toggler"
@@ -27,9 +28,9 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul id="navMenu" class="navbar-nav ms-auto">
+					<ul id="navMenu" class="navbar-nav ">
 						<li class="nav-item">
-							<a class="nav-link" href="../feed">Feed</a>
+							<a class="nav-link text-primary" href="../listings/"> | Listings</a>
 						</li>
 						
 					</ul>
@@ -37,167 +38,59 @@
 			</div>
 		</nav>
 
-		<div class="container w-limit p-1">
-			<div class="row m-2">
-				<!-- Sidebar -->
-				<div class="col-md-4 p-0 sidebar">
-					<h1 class="text-center text-secondary p-3">Profile</h1>
-					<div class="card bg-dark-subtle rounded-2">
-						<div class="row">
-							<div class="col">
-								<img
-									src="../assets/img/profile_temp.jpg"
-									class="card-img-top rounded-2"
-									alt="Profile Image"
-								/>
-								<div class="card-body text-center ">
-									<h5 class="card-title text-secondary"><strong>Username</strong></h5>
-									<hr class="border-secondary">
-									<p class="card-text text-secondary">
-										Followers: 1000
-									</p>
-									<p class="card-text text-secondary">Following: 500</p>
-									<button type="button" class="btn btn-secondary">
-										Follow
-									</button>
-									<button
-										type="button"
-										class="btn btn-outline-secondary"
+		<div class="d-flex justify-content-center ">
+			<div class="edit-post mt-5 bg-dark rounded p-5 text-primary">
+								<h3 class="text-primary text-center pb-1 mb-5">
+									Edit Profile
+								</h3>
+								<form id="editForm" enctype="multipart/form-data">
+									<div class="mb-3">
+										<label for="User Name" class="form-label"
+											>Name:</label
+										>
+										<p id="profileName"></p>
+									</div>
+									<div class="mb-3">
+										<label for="Email" class="form-label"
+											>Email:</label
+										>
+										<p id="profileEmail"></p>
+									</div>
+									<div class="mb-4">
+										
+										<label for="media" class="form-label"
+											>Avatar:</label
+										>
+										<br>
+										<!-- I know.. lazy using gif loading image instead of css	-->
+										<img id="avatarImg" alt="avatar" class="w-100 mx-auto mb-2" src="../assets/img/load.gif">
+										<input
+											type="text"
+											name="avatar"
+											class="form-control"
+											id="avatar"
+											required
+										/>
+									</div>
+									<div class="mb-1">
+										<label for="credits" class="form-label"
+											>Credits:</label
+										>
+										<p id="profileCredits"></p>
+									</div>
+									<div
+										class="my-1 d-flex justify-content-center align-items-center"
 									>
-										Message
-									</button>
-									<hr class="text-secondary"/>
-								</div>
-								<div class="col">
-									<div class="card-body text-center text">
-										<h5 class="card-title pb-4 text-secondary"><strong>Bio</strong></h5>
-										<p
-											class="card-text p-3 text-bg-secondary rounded-2"
+										<button
+											type="submit"
+											class="btn px-2 mt-4 btn-outline-primary"
 										>
-											🌎✈️ Front-end Developer with a passion for
-											traveling! 🤓📱 Always eager to learn and
-											create user-friendly interfaces. 🌟 Let's
-											connect and share our adventure stories! 🌴🌊
-											#travelbug #frontenddev.
-										</p>
+											Update profile
+										</button>
 									</div>
-								</div>
+								</form>
 							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Posts -->
-				<div class="col-md-8 p-2">
-					<div class="card rounded bg-dark-subtle">
-						<div class="card-header">
-							<h2 class="card-title p-3 text-center text-secondary">User Posts</h2>
-						</div>
-						<div class="container-fluid p-0 overflow-hidden">
-							<div class="row">
-								<div class="card-body mx-auto post">
-									<div class="card-body text-center">
-										<h5
-											class="card-title bg-dark p-3 rounded-top m-0 text-secondary"
-										>
-											Post Title
-										</h5>
-										<img
-											src="https://picsum.photos/701"
-											alt="Post Image"
-											class="img-fluid rounded-0 card-img"
-										/>
-										<p
-											class="card-text mx-auto p-3 m-0 bg-dark text-light"
-										>
-											Lorem ipsum dolor, sit amet consectetur
-											adipisicing elit. Similique debitis qui dolore
-											error delectus labore molestias dolorum
-											expedita laudantium, consectetur temporibus
-											porro quod illum dolor amet accusamus cum
-											voluptatum velit.
-										</p>
-										<div
-											class="d-flex justify-content-between accent p-md-3 rounded-bottom align-items-center"
-										>
-											<div class="btn-group p-1">
-												<button
-													type="button"
-													class="btn btn-sm btn-outline-primary"
-												>
-													Like
-												</button>
-												<button
-													type="button"
-													class="btn btn-sm btn-outline-primary"
-												>
-													Comment
-												</button>
-											</div>
-											<small class="text-primary">
-												<span class="me-2">10 likes</span>
-												<span class="me-2">5 comments</span>
-											</small>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<hr />
-						<div class="container-fluid p-0 overflow-hidden">
-							<div  class="row">
-								<div id="userPost" class="card-body mx-auto post">
-									<div class="card-body text-center">
-										<h5
-											class="card-title bg-dark p-3 rounded-top m-0 text-secondary"
-										>
-											Post Title
-										</h5>
-										<img
-											src="https://picsum.photos/701"
-											alt="Post Image"
-											class="img-fluid rounded-0 card-img"
-										/>
-										<p
-											class="card-text mx-auto p-3 m-0 bg-dark text-light"
-										>
-											Lorem ipsum dolor, sit amet consectetur
-											adipisicing elit. Similique debitis qui dolore
-											error delectus labore molestias dolorum
-											expedita laudantium, consectetur temporibus
-											porro quod illum dolor amet accusamus cum
-											voluptatum velit.
-										</p>
-										<div
-											class="d-flex justify-content-between accent p-md-3 rounded-bottom align-items-center"
-										>
-											<div class="btn-group p-1">
-												<button
-													type="button"
-													class="btn btn-sm btn-outline-primary"
-												>
-													Like
-												</button>
-												<button
-													type="button"
-													class="btn btn-sm btn-outline-primary"
-												>
-													Comment
-												</button>
-											</div>
-											<small class="text-primary">
-												<span class="me-2">10 likes</span>
-												<span class="me-2">5 comments</span>
-											</small>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<hr />
-					</div>
-				</div>
-			</div>
 		</div>
+	
 	</body>
 </html>

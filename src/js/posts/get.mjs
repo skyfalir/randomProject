@@ -1,4 +1,4 @@
-import { API_SOCIAL_URL } from '../api/constants.mjs';
+import { API_AUCTION_URL } from '../api/constants.mjs';
 import { authFetch } from './authFetch.mjs';
 
 /**
@@ -15,11 +15,12 @@ export async function get(id) {
 	if (!id) {
 		throw new Error('Missing post Id');
 	}
-	const getPostURL = `${API_SOCIAL_URL}${actions}/${id}`;
+	const getPostURL = `${API_AUCTION_URL}${actions}/${id}?_seller=true&_bids=true`;
 
 	const response = await authFetch(getPostURL);
 
-	return await response.json();
+	const data = await response.json();
+	return data;
 }
 
 /**
@@ -28,10 +29,11 @@ export async function get(id) {
  * @return {Promise} A Promise that resolves with an object containing posts.
  */
 
-export async function getPosts() {
-	const getPostURL = `${API_SOCIAL_URL}${actions}/`;
-
+export async function getPosts(postCount, isActive) {
+	const activeFlag = isActive ? '&_active=true' : '';
+	const getPostURL = `${API_AUCTION_URL}${actions}?_seller=true${activeFlag}&_bids=true`;
 	const response = await authFetch(getPostURL);
-
-	return await response.json();
+	const data = await response.json();
+	const limit = data.slice(0, postCount);
+	return limit;
 }
