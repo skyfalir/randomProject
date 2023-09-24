@@ -31,5 +31,3 @@ export function search() {
 	);
 }
 }
-
-// I know seperating this might be convoluted but it works

@@ -14,6 +14,7 @@ export function isLoggedIn(){
  *
  * @return {string} The name of the user if found, otherwise null.
  */
+
 export function getName() {
     try {
       const profile = storage.load('profile');
@@ -24,4 +25,15 @@ export function getName() {
       return null;
     }
   }
+export function getCredit(){
+    try{
+      const profile = storage.load('profile');
+      if (profile && profile.hasOwnProperty('credits')){
+        return profile.credits;
+      }
+    }catch{
+      return null;
+
+    }
+}  
   
