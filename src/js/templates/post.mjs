@@ -49,13 +49,14 @@ export function postTemplate(postData) {
 	// // postImage.alt = 'Post Image';
 
 	/* Body */
-	const bids = document.createElement('p');
+	const postBodyDetails = document.createElement('div');
+	postBodyDetails.classList.add('accent', 'text-center', 'text-primary');
+	const lastBid = document.createElement('p');
 
-	const lastBidAmount =
-		Number(postData.bids[postData.bids.length - 1]?.amount) || 0;
+	const lastBidAmount = Number(postData.bids[postData.bids.length - 1]?.amount) || 0;
 
-	bids.classList.add('m-0', 'bidcount', 'accent', 'text-center', 'text-primary');
-	bids.innerText = `Last bid: ${lastBidAmount} Credits`;
+	lastBid.classList.add('m-0', 'bidcount');
+	lastBid.innerText = `Last bid: ${lastBidAmount} Credits`;
 	const postBody = document.createElement('div');
 
 	/* Description */
@@ -69,10 +70,32 @@ export function postTemplate(postData) {
 		'bg-secondary',
 		'text-light'
 	);
-	postDescription.classList.add('p-3', 'm-0', 'accent', 'text-center', 'text-primary');
+	postDescription.classList.add('p-3');
 	postDescription.innerHTML = ` Description: ${postData.description}`;
+	const deadline = document.createElement('p');
+
+	const rawDate = postData.endsAt;
+	const date = new Date(rawDate);
+
+	// Format the date and time
+	const options = {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit',
+		second: '2-digit',
+		timeZoneName: 'short',
+	};
+
+	const formattedDate = date.toLocaleString('en-US', options);
+
+	deadline.innerText = `Deadline: ${formattedDate}`;
+	
 
 	/* Details Container */
+	const smallSpacer = document.createElement('hr');
+	smallSpacer.classList.add('border-primary');
 
 	const postDetailsContainer = document.createElement('div');
 	postDetailsContainer.classList.add(
@@ -108,7 +131,7 @@ export function postTemplate(postData) {
 		window.location.href = '../listing/' + `?id=${postData.id}`;
 	};
 	postButtonGroup.appendChild(bidButton);
-	postDetailsContainer.appendChild(postButtonGroup);
+
 
 	/* Images */
 
@@ -154,16 +177,20 @@ export function postTemplate(postData) {
 
 	// Initialize with the first image
 	updateImage();
-	postBody.append(imgNavBtnGroup, authorBody);
+
+	// Append elements
+	postDetailsContainer.appendChild(postButtonGroup);
+	postBodyDetails.append(postDescription,smallSpacer,deadline,lastBid);
+	postBody.append(imgNavBtnGroup, authorBody);;
 	imgContainer.appendChild(postImage);
-	// Append elements to the container
 	container.appendChild(anchor);
-	container.appendChild(imgContainer); // Append the image element
+	container.appendChild(imgContainer);
 	container.appendChild(postBody);
-	container.append(postDescription, bids);
+	container.appendChild(postBodyDetails);
 	container.appendChild(postDetailsContainer);
 	postWrapper.appendChild(container);
 	postWrapper.appendChild(spacer);
+
 	//get path
 	const path = location.pathname;
 
@@ -198,7 +225,7 @@ export function postTemplate(postData) {
 
 				container.appendChild(anchor);
 				postWrapper.appendChild(container);
-				container.append(postDescription, bids);
+				container.append(postBodyDetails);
 				container.appendChild(imgContainer);
 				container.appendChild(postBody);
 
@@ -208,7 +235,7 @@ export function postTemplate(postData) {
 				postWrapper.appendChild(container);
 				container.appendChild(imgContainer);
 				container.appendChild(postBody);
-				postWrapper.append(postDescription, bids);
+				postWrapper.append(postBodyDetails);
 				postWrapper.appendChild(postDetailsContainer);
 			}
 		}
