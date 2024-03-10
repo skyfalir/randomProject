@@ -1,5 +1,5 @@
 # Semester project - nAuction website
-[![image](https://i.gyazo.com/a3849be6fc0db147345954036efa121a.png)](lively-medovik-d6f9c7.netlify.app)
+[![image](https://i.gyazo.com/a3849be6fc0db147345954036efa121a.png)](https://lively-medovik-d6f9c7.netlify.app)
 ## A simple auction website.
 ![Netlify Status](https://api.netlify.com/api/v1/badges/b53b56b8-c539-4327-b264-9797a3c52493/deploy-status)
 
